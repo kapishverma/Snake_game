@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ek Tha Naag</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Permanent+Marker&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .body {
+            background: radial-gradient(yellow, orange, red);
+            min-width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #board {
+            background: linear-gradient(aquamarine, chartreuse);
+            height: 92vmin;
+            width: 90vmin;
+            border: 2px solid black;
+            display: grid;
+            position: relative;
+            grid-template-rows: repeat(18, 1fr);
+            grid-template-columns: repeat(18, 1fr);
+
+        }
+
+        .head {
+            background: url('m/head.png');
+            border-radius: 50%;
+            background-size: cover;
+            background-color: chartreuse;
+            border: 1px solid black;
+            transform: scale(1.2);
+            z-index: 1000;
+        }
+
+        .snake {
+            background-color: purple;
+            border: 1px solid white;
+            border-radius: 10px;
+            border: 1px solid black;
+        }
+
+        .food {
+            background-image: url("m/food.png");
+            background-size: cover;
+            border-radius: 8px;
+        }
+
+        #scoreTable {
+            position: absolute;
+            top: 9px;
+            right: 200px;
+            font-size: 30px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="body">
+        <div id="scoreTable"> Score: 0</div>
+        <div id="board"></div>
+
+    </div>
+
+
+</body>
+<script>
+
+    // constant and variable 
+    let inputDir = { x: 0, y: 0 };
+    const foodSound = new Audio('m/food.mpeg');
+    const gameOverSound = new Audio('m/gameOver.mpeg');
+    const moveSound = new Audio('m/move.mpeg');
+    let speed = 4;
+    let score = 0;
+    let lastPaintTime = 0;
+    let snakeArr = [
+        { x: 9, y: 9 }
+    ]
+    let food = { x: 13, y: 15 };
+
+    //game Functions
+    // setInterval(musicSound.play(),30200);
+    function main(currentTime) {
+        window.requestAnimationFrame(main);
+        if ((currentTime - lastPaintTime) / 1000 < 1 / speed)
+            return;
+        lastPaintTime = currentTime;
+        gameEngine();
+
+    }
+    function isCollide(snake) {
+
+        // if snake eat himself
+
+        for (let i = 0; i < snake.length; i++) {
+            if (i !== 0 && snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+                return true;
+            }
+            // collide into wall
+            if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
+                return true;
+            }
+        }
+
+    }
+    function gameEngine() {
+
+        // part 1: updating the snake variable
+
+        if (isCollide(snakeArr)) {
+            gameOverSound.play();
+            alert("Game over!!! Press OK to play the game");
+            snakeArr = [{ x: 9, y: 9 }];
+            inputDir = { x: 0, y: 0 } // start the game
+            score = 0;
+        }
+
+        // if food is eaten by the snake then increse the score and new food place
+        if (snakeArr[0].y === food.y && snakeArr[0].x === food.x) {
+            foodSound.play();
+            score++;
+            scoreTable.innerHTML = "Score:" + score;
+
+            snakeArr.unshift({ x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y });
+            // 3 and 15 ke bich ka random number generate hoga
+            food = { x: Math.round(3 + (15 - 3) * Math.random()), y: Math.round(3 + (15 - 3) * Math.random()) }
+        }
+
+        // Moving the snake
+        for (let i = snakeArr.length - 2; i >= 0; i--) {
+
+            snakeArr[i + 1] = { ...snakeArr[i] };
+
+        }
+        snakeArr[0].x = snakeArr[0].x + inputDir.x;
+        snakeArr[0].y = snakeArr[0].y + inputDir.y;
+
+        // part 2: render the snake
+
+        board.innerHTML = "";
+        snakeArr.forEach((element, index) => {
+            snakeElement = document.createElement('div');
+            snakeElement.style.gridRowStart = element.y;
+            snakeElement.style.gridColumnStart = element.x;
+            snakeElement.classList.add('snake');
+            if (index === 0) {
+                snakeElement.classList.remove('snake');
+                snakeElement.classList.add('head');
+            }
+
+            board.appendChild(snakeElement);
+        });
+        // display the food
+        foodElement = document.createElement('div');
+        foodElement.style.gridRowStart = food.y;
+        foodElement.style.gridColumnStart = food.x;
+        foodElement.classList.add('food');
+        board.appendChild(foodElement);
+    }
+
+    // mains logic of game 
+
+    window.requestAnimationFrame(main);
+
+    // user input for movement
+
+    window.addEventListener('keydown', element => {
+        inputDir = { x: 0, y: 0 } // start the game
+        moveSound.play();
+        switch (element.key) {
+
+            case "ArrowUp":
+                inputDir.x = 0;
+                inputDir.y = -1;
+                break;
+
+            case "ArrowDown":
+                inputDir.x = 0;
+                inputDir.y = 1;
+                break;
+
+            case "ArrowLeft":
+                inputDir.x = -1;
+                inputDir.y = 0;
+                break;
+
+            case "ArrowRight":
+                inputDir.x = 1;
+                inputDir.y = 0;
+                break;
+        }
+    })
+
+</script>
+
+</html>
