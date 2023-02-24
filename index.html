@@ -61,38 +61,41 @@
 
         #scoreTable {
             position: absolute;
-            top: 9px;
-            right: 200px;
+            top: 40%;
+            right: 120px;
             font-size: 30px;
             font-weight: 700;
             font-family: 'Orbitron', sans-serif;
         }
         #nav{
-             position: absolute;
-            top: 45px;
-            right: 200px;
+            position: absolute;
+            width: 400px;
+            height: 70px;
+            top: 40%;
+            left: 50px;
             font-size: 30px;
-            font-weight: 700;
+            font-weight: 1000;
             font-family: 'Orbitron', sans-serif;
         }
-            
     </style>
 </head>
 
 
 <body>
+
     <div class="body">
-        <div id="nav"> Arrow Keys For Movement</div>
+        <div id="nav">Arraw Keys For Movement</div>
         <div id="scoreTable"> Score: 0</div>
         <div id="board"></div>
 
     </div>
 
-
 </body>
+
 <script>
 
     // constant and variable 
+
     let inputDir = { x: 0, y: 0 };
     const foodSound = new Audio('m/food.mpeg');
     const gameOverSound = new Audio('m/gameOver.mpeg');
@@ -106,7 +109,7 @@
     let food = { x: 13, y: 15 };
 
     //game Functions
-    // setInterval(musicSound.play(),30200);
+
     function main(currentTime) {
         window.requestAnimationFrame(main);
         if ((currentTime - lastPaintTime) / 1000 < 1 / speed)
