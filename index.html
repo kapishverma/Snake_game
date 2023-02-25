@@ -90,44 +90,53 @@
         .btns {
             display: none;
         }
+
         @media screen and (max-width: 700px) {
-            
+
             #scoreTable {
                 top: 30px;
-                left:30px;
+                left: 30px;
             }
-            #board{
+
+            #board {
                 top: -150px;
             }
-            .btns{
+
+            .btns {
                 position: absolute;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                bottom: 120px;
-                left: auto;
+                bottom: 50px;
+                right: 10px;
                 height: 165px;
                 width: 165px;
             }
-            button{
+
+            button {
                 position: absolute;
             }
-            .bi{
+
+            .bi {
                 font-size: 50px;
                 color: black;
                 background-color: transparent;
                 line-height: 0;
             }
-            #up{
-            top: 0;
+
+            #up {
+                top: 0;
             }
-            #down{
+
+            #down {
                 bottom: 0;
             }
-            #left{
+
+            #left {
                 left: 0;
             }
-            #right{
+
+            #right {
                 right: 0;
             }
         }
@@ -269,8 +278,27 @@
 
     // user input for movement
 
+    up.addEventListener('click', function () {
+        moveSound.play();
+        inputDir.x = 0;
+        inputDir.y = -1;
+    });
+    down.addEventListener('click', function () {
+        moveSound.play();
+        inputDir.x = 0;
+        inputDir.y = 1;
+    });
+    left.addEventListener('click', function () {
+        moveSound.play();
+        inputDir.x = -1;
+        inputDir.y = 0;
+    });
+    right.addEventListener('click', function () {
+        moveSound.play();
+        inputDir.x = 1;
+        inputDir.y = 0;
+    });
     window.addEventListener('keydown', element => {
-        inputDir = { x: 0, y: 0 } // start the game
         switch (element.key) {
 
             case "ArrowUp":
