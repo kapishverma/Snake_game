@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ek Tha Naag</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Permanent+Marker&display=swap');
 
@@ -22,7 +24,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: fixed;
+            position: relative;
         }
 
         #board {
@@ -48,16 +50,18 @@
             z-index: 1000;
         }
 
-        .head_up{
-          
-            transform: scale(1.2)  rotateZ(180deg);
+        .head_up {
+
+            transform: scale(1.2) rotateZ(180deg);
         }
-        .head_left{
-            
-            transform: scale(1.2)  rotateZ(90deg);
+
+        .head_left {
+
+            transform: scale(1.2) rotateZ(90deg);
         }
-        .head_right{
-            
+
+        .head_right {
+
             transform: scale(1.2) rotateZ(-90deg);
         }
 
@@ -83,15 +87,45 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        #nav {
-            position: absolute;
-            width: 400px;
-            height: 70px;
-            top: 40%;
-            left: 50px;
-            font-size: 30px;
-            font-weight: 1000;
-            font-family: 'Orbitron', sans-serif;
+        .btns {
+            display: none;
+        }
+        @media screen and (max-width: 700px) {
+            
+            #scoreTable {
+                top: 30px;
+                left:30px;
+            }
+            #board{
+                top: -150px;
+            }
+            .btns{
+                position: absolute;
+                display: flex;
+                bottom: 120px;
+                left: auto;
+            }
+            button{
+                position: absolute;
+            }
+            .bi{
+                font-size: 50px;
+                color: black;
+                background-color: transparent;
+                line-height: 0;
+            }
+            #up{
+            top: -55px;
+            }
+            #down{
+                top: 55px;
+            }
+            #left{
+                left: -55px;
+            }
+            #right{
+                left: 55px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
@@ -101,10 +135,18 @@
 <body>
 
     <div class="body">
-        <div id="nav">Arraw Keys For Movement</div>
+
         <div id="scoreTable"> Score: 0</div>
         <div id="board"></div>
+
+        <div class="btns">
+            <button id="up"><i class="bi bi-arrow-up-square"></i></button>
+            <button id="down"><i class="bi bi-arrow-down-square"></i></button>
+            <button id="left"><i class="bi bi-arrow-left-square"></i></button>
+            <button id="right"><i class="bi bi-arrow-right-square"></i></button>
+        </div>
     </div>
+
 </body>
 
 <script>
@@ -155,7 +197,7 @@
 
         if (isCollide(snakeArr)) {
             gameOverSound.play();
-            alert("Game over!!! Press OK to play the game");
+            alert("Game over!!! Press OK to play the game  && Arraw Keys For Movement");
             snakeArr = [{ x: 9, y: 9 }];
             inputDir = { x: 0, y: 0 } // start the game
             score = 0;
@@ -191,7 +233,7 @@
             snakeElement.classList.add('snake');
             if (index === 0) {
                 snakeElement.classList.remove('snake');
-                snakeElement.classList.add("head" , head(inputDir));
+                snakeElement.classList.add("head", head(inputDir));
 
             }
 
@@ -213,7 +255,7 @@
 
             else if (input.x === 1 && input.y === 0)
                 return "head_right";
-            
+
         }
     }
 
@@ -225,25 +267,28 @@
 
     window.addEventListener('keydown', element => {
         inputDir = { x: 0, y: 0 } // start the game
-        moveSound.play();
         switch (element.key) {
 
             case "ArrowUp":
+                moveSound.play();
                 inputDir.x = 0;
                 inputDir.y = -1;
                 break;
 
             case "ArrowDown":
+                moveSound.play();
                 inputDir.x = 0;
                 inputDir.y = 1;
                 break;
 
             case "ArrowLeft":
+                moveSound.play();
                 inputDir.x = -1;
                 inputDir.y = 0;
                 break;
 
             case "ArrowRight":
+                moveSound.play();
                 inputDir.x = 1;
                 inputDir.y = 0;
                 break;
