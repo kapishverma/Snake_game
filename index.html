@@ -49,30 +49,15 @@
         }
 
         .head_up{
-            background: url('m/head.png');
-            border-radius: 50%;
-            background-size: cover;
-            background-color: chartreuse;
-            border: 1px solid black;
-            z-index: 1000;
+          
             transform: scale(1.2)  rotateZ(180deg);
         }
         .head_left{
-            background: url('m/head.png');
-            border-radius: 50%;
-            background-size: cover;
-            background-color: chartreuse;
-            border: 1px solid black;
-            z-index: 1000;
+            
             transform: scale(1.2)  rotateZ(90deg);
         }
         .head_right{
-            background: url('m/head.png');
-            border-radius: 50%;
-            background-size: cover;
-            background-color: chartreuse;
-            border: 1px solid black;
-            z-index: 1000;
+            
             transform: scale(1.2) rotateZ(-90deg);
         }
 
@@ -206,7 +191,7 @@
             snakeElement.classList.add('snake');
             if (index === 0) {
                 snakeElement.classList.remove('snake');
-                snakeElement.classList.add(head(inputDir));
+                snakeElement.classList.add("head" , head(inputDir));
 
             }
 
@@ -228,8 +213,7 @@
 
             else if (input.x === 1 && input.y === 0)
                 return "head_right";
-            else
-                return "head";
+            
         }
     }
 
