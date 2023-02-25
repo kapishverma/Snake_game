@@ -37,6 +37,7 @@
 
         }
 
+        /* snake head */
         .head {
             background: url('m/head.png');
             border-radius: 50%;
@@ -45,6 +46,34 @@
             border: 1px solid black;
             transform: scale(1.2);
             z-index: 1000;
+        }
+
+        .head_up{
+            background: url('m/head.png');
+            border-radius: 50%;
+            background-size: cover;
+            background-color: chartreuse;
+            border: 1px solid black;
+            z-index: 1000;
+            transform: scale(1.2)  rotateZ(180deg);
+        }
+        .head_left{
+            background: url('m/head.png');
+            border-radius: 50%;
+            background-size: cover;
+            background-color: chartreuse;
+            border: 1px solid black;
+            z-index: 1000;
+            transform: scale(1.2)  rotateZ(90deg);
+        }
+        .head_right{
+            background: url('m/head.png');
+            border-radius: 50%;
+            background-size: cover;
+            background-color: chartreuse;
+            border: 1px solid black;
+            z-index: 1000;
+            transform: scale(1.2) rotateZ(-90deg);
         }
 
         .snake {
@@ -79,7 +108,6 @@
             font-weight: 1000;
             font-family: 'Orbitron', sans-serif;
         }
-        
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
@@ -92,8 +120,6 @@
         <div id="scoreTable"> Score: 0</div>
         <div id="board"></div>
     </div>
-
-
 </body>
 
 <script>
@@ -137,6 +163,7 @@
         }
 
     }
+
     function gameEngine() {
 
         // part 1: updating the snake variable
@@ -179,7 +206,9 @@
             snakeElement.classList.add('snake');
             if (index === 0) {
                 snakeElement.classList.remove('snake');
-                snakeElement.classList.add('head');
+                console.log(head(inputDir));
+                snakeElement.classList.add(head(inputDir));
+
             }
 
             board.appendChild(snakeElement);
@@ -190,6 +219,19 @@
         foodElement.style.gridColumnStart = food.x;
         foodElement.classList.add('food');
         board.appendChild(foodElement);
+
+        function head(input) {
+            if (input.x === 0 && input.y === -1)
+                return "head_up";
+
+            else if (input.x === -1 && input.y === 0)
+                return "head_left";
+
+            else if (input.x === 1 && input.y === 0)
+                return "head_right";
+            else
+                return "head";
+        }
     }
 
     // mains logic of game 
